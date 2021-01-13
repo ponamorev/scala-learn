@@ -1,11 +1,14 @@
 // 3.10 read lines from a file
 
-import scala.io.Source
+// uncomment for run it through a console
+/*import scala.io.Source
 
 // for debug
 val args = Array("D:\\IdeaProjects\\scala-learn\\src\\examples\\filereading.scala")
 if (args.length > 0) {
-  val lines = Source.fromFile(args(0)).getLines().toList
+  val source = Source.fromFile(args(0))
+  val lines = source.getLines().toList
+  source.close()
   val longestLine = lines.reduceLeft((a, b) => if (a.length > b.length) a else b)
   val maxWidth = widthOfLength(longestLine)
   for (line <- lines) {
@@ -17,4 +20,4 @@ if (args.length > 0) {
 
 def widthOfLength(line: String): Int = {
   line.length.toString.length
-}
+}*/
