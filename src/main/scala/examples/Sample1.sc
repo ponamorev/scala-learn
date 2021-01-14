@@ -1,3 +1,5 @@
+import rational.Rational
+
 import java.math.BigInteger
 import scala.collection.mutable
 
@@ -90,4 +92,25 @@ def formatArgs(args: Array[String]) = args.mkString("\n")
 val res = formatArgs(Array("zero", "one", "two"))
 assert(res == "zero\none\ntwo")
 
+// 5 data types and operations
+println("""Welcome to Ultamix 3000.
+           Type "HELP" for help.""")
+println("""|Welcome to Ultamix 3000.
+           |Type "HELP" for help.""".stripMargin)
 
+// 6. functional objects
+val x = new Rational(1, 2)
+//val ex = new Rational(5, 0)
+
+val x = new Rational(1, 2)
+val y = new Rational(2, 3)
+//val rationResult = x + y
+//rationResult.numer
+//rationResult.denom
+
+x + x * y
+(x + x) * y
+
+implicit def intToRational(i: Int): Rational =
+    new Rational(i)
+2 * y
