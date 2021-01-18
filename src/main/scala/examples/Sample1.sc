@@ -1,7 +1,9 @@
 import rational.Rational
 
+import java.io.{File, FileNotFoundException, FileReader, IOException}
 import java.math.BigInteger
 import scala.collection.mutable
+import scala.io.Source
 
 var capital = Map("US" -> "Washington", "France" -> "Paris")
 capital += ("Japan" -> "Tokyo")
@@ -42,7 +44,7 @@ greetStrings(0) = "Hello"
 greetStrings(1) = ", "
 greetStrings(2) = "world!\n"
 for (i <- 0 to 2) {
-    print(greetStrings(i))
+  print(greetStrings(i))
 }
 val numNames2 = Array("zero", "one", "two")
 
@@ -93,10 +95,12 @@ val res = formatArgs(Array("zero", "one", "two"))
 assert(res == "zero\none\ntwo")
 
 // 5 data types and operations
-println("""Welcome to Ultamix 3000.
+println(
+  """Welcome to Ultamix 3000.
            Type "HELP" for help.""")
-println("""|Welcome to Ultamix 3000.
-           |Type "HELP" for help.""".stripMargin)
+println(
+  """|Welcome to Ultamix 3000.
+     |Type "HELP" for help.""".stripMargin)
 
 // 6. functional objects
 val x = new Rational(1, 2)
@@ -112,5 +116,82 @@ x + x * y
 (x + x) * y
 
 implicit def intToRational(i: Int): Rational =
-    new Rational(i)
+  new Rational(i)
 2 * y
+
+// 7.2 loop while and do-while
+def gcdLoop(x: Long, y: Long): Long = {
+  var a = x
+  var b = y
+  while (a != 0) {
+    val temp = a
+    a = b % a
+    b = temp
+  }
+  b
+}
+
+gcdLoop(324485, 1231)
+
+// using ()
+def greet(): Unit = {
+  println("hi")
+}
+() == greet()
+
+// use for with filter (if statement)
+val curDir = "D:\\IdeaProjects\\scala-learn\\src\\main\\scala\\examples"
+val filesHere = new File(curDir).listFiles
+for (
+file <- filesHere
+if file.isFile
+if file.getName.endsWith(".scala")
+) println(file)
+
+val rationalDir = curDir + "\\..\\rational"
+val rationalFiles = new File(rationalDir).listFiles
+def fileLines(file: File) = {
+  val src = Source.fromFile(file)
+  val linesList = src.getLines().toList
+  src.close()
+  linesList
+}
+
+def grep(pattern: String): Unit =
+  for {
+    file <- rationalFiles
+    if file.getName.endsWith(".scala");
+    line <- fileLines(file)
+    trimmed = line.trim
+    if trimmed.matches(pattern)
+  } println(file.getAbsolutePath + ": " + trimmed)
+
+grep(".*gcd.*")
+
+val forLineLengths =
+  for {
+    file <- rationalFiles
+    if file.isFile
+    if file.getName.endsWith(".scala")
+    line <- fileLines(file)
+    trimmed = line.trim
+    if trimmed.matches(".*val.*")
+  } yield trimmed.length
+
+
+// exceptions
+def getHalf(n: Int): Int = {
+  if (n % 2 == 0)
+    n / 2
+  else
+    throw new RuntimeException("n must be even")
+}
+getHalf(3)
+
+try {
+  val f = new FileReader("input.txt")
+  // use and close file
+} catch {
+  case ex: FileNotFoundException => println("File not found")
+  case ex: IOException => println("IOException")
+}
