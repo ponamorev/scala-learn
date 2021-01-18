@@ -186,7 +186,11 @@ def getHalf(n: Int): Int = {
   else
     throw new RuntimeException("n must be even")
 }
-getHalf(3)
+try
+  getHalf(3)
+catch {
+  case ex: RuntimeException => println("I've caught RuntimeException")
+}
 
 try {
   val f = new FileReader("input.txt")
@@ -195,3 +199,9 @@ try {
   case ex: FileNotFoundException => println("File not found")
   case ex: IOException => println("IOException")
 }
+
+// using finally block for value returning
+def f(): Int = try 1 finally return 2
+def g(): Int = try 1 finally 2
+f()
+g()
