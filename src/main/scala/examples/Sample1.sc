@@ -143,9 +143,9 @@ def greet(): Unit = {
 val curDir = "D:\\IdeaProjects\\scala-learn\\src\\main\\scala\\examples"
 val filesHere = new File(curDir).listFiles
 for (
-file <- filesHere
-if file.isFile
-if file.getName.endsWith(".scala")
+  file <- filesHere
+  if file.isFile
+  if file.getName.endsWith(".scala")
 ) println(file)
 
 val rationalDir = curDir + "\\..\\rational"
@@ -160,7 +160,7 @@ def fileLines(file: File) = {
 def grep(pattern: String): Unit =
   for {
     file <- rationalFiles
-    if file.getName.endsWith(".scala");
+    if file.getName.endsWith(".scala")
     line <- fileLines(file)
     trimmed = line.trim
     if trimmed.matches(pattern)
@@ -205,3 +205,19 @@ def f(): Int = try 1 finally return 2
 def g(): Int = try 1 finally 2
 f()
 g()
+
+var increase = (x: Int) => x + 1
+increase(10)
+increase = (x: Int) => x + 9999
+increase(10)
+increase = (x: Int) => {
+  println("We")
+  println("are")
+  println("here!")
+  x + 1
+}
+increase(10)
+
+val someNumbers = List(-11, -10, -5, 0, 5, 10)
+someNumbers.foreach((x: Int) => println(x))
+someNumbers.filter((x: Int) => x > 0)
